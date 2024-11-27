@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../config/db");
-const { v4: uuidv4 } = require("uuid");
 
 router.post("/sensor-data", (req, res) => {
   const { intensity, timestamp } = req.body;
@@ -10,7 +9,6 @@ router.post("/sensor-data", (req, res) => {
     return res.status(400).json({ message: "Invalid data" });
   }
 
-  const uniqueId = uuidv4(); // إنشاء UUID جديد
   const query =
     "INSERT INTO sensor_data ( intensity, timestamp) VALUES ( ?, ?)";
 
