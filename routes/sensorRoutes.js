@@ -12,14 +12,14 @@ router.post("/sensor-data", (req, res) => {
 
   const uniqueId = uuidv4(); // إنشاء UUID جديد
   const query =
-    "INSERT INTO sensor_data (id, intensity, timestamp) VALUES (?, ?, ?)";
+    "INSERT INTO sensor_data ( intensity, timestamp) VALUES ( ?, ?)";
 
-  db.query(query, [uniqueId, intensity, timestamp], (err, results) => {
+  db.query(query, [intensity, timestamp], (err, results) => {
     if (err) {
       return res.status(500).json({ message: "Error saving data", error: err });
     }
     console.log(
-      `Received data: UUID: ${uniqueId}, Intensity: ${intensity}, Timestamp: ${timestamp}`
+      `Received data Intensity: ${intensity}, Timestamp: ${timestamp}`
     );
     res
       .status(201)
