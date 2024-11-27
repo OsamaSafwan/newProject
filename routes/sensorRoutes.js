@@ -3,25 +3,23 @@ const router = express.Router();
 const db = require("../config/db");
 
 router.post("/sensor-data", (req, res) => {
-  const { intensity, timestamp } = req.body;
+  const { intensity, timestamp, location } = req.body;
 
   if (typeof intensity !== "number" || !timestamp) {
     return res.status(400).json({ message: "Invalid data" });
   }
 
   const query =
-    "INSERT INTO sensor_data ( intensity, timestamp) VALUES ( ?, ?)";
+    "INSERT INTO sensor_data ( intensity, timestamp , location) VALUES ( ?, ?,?)";
 
-  db.query(query, [intensity, timestamp], (err, results) => {
+  db.query(query, [intensity, timestamp, location], (err, results) => {
     if (err) {
       return res.status(500).json({ message: "Error saving data", error: err });
     }
     console.log(
-      `Received data Intensity: ${intensity}, Timestamp: ${timestamp}`
+      `Received data Intensity: ${intensity}, Timestamp: ${timestamp} , location${location}`
     );
-    res
-      .status(201)
-      .json({ message: "Data received successfully", uuid: uniqueId });
+    res.status(201).json({ message: "Data received successfully" });
   });
 });
 
